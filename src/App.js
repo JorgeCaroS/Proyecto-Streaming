@@ -1,26 +1,55 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import '../components/App.css';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Netflix from "./Netflix";
+import VerPelicula from './VerPelicula';
+import Home from "./Home";
+import peliculas from "./peliculas";
+import NotFound from "./NotFound";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      peliculas: peliculas,
+      nombrePeli: "null",
+      linkPeli: "null"
+    };
+  
 }
+
+  render() {
+
+    
+    console.log(this);
+    
+
+    return (
+      <BrowserRouter>
+       
+        <Switch>
+          <Route exact path="/" component={Netflix} />
+          <Route exact path="/usuario/:nombreUsuario" component={Home}/>
+          
+          <Route exact path="/usuario/:nombreUsuario/:nombrePelicula/"
+            component={() => <VerPelicula  peliculas={this.state.peliculas}  />} />
+          <Route component={NotFound} />
+
+        </Switch>
+      </BrowserRouter>
+    
+
+    )
+
+  }
+
+
+}
+
+
 
 export default App;
